@@ -7,7 +7,7 @@
 #include "Heap.h"
 
 template<class T, int m_size>
-class MaxHeap : public Heap{
+class MaxHeap : public Heap<T,m_size>{
 
 };
 

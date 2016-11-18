@@ -6,8 +6,7 @@
 #define PROJ4_MINHEAP_H
 #include "Heap.h"
 
-template<class T, int m_size>
-class MinHeap : public Heap {
+template<class T, int m_size> class MinHeap : public Heap<T,m_size> {
 
 };
 
