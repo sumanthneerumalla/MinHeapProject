@@ -1,28 +1,29 @@
 #ifndef HEAP_H_
 #define HEAP_H_
 
-template<class T, int m_size> class Heap{
+template<class T, int m_size>
+class Heap {
 
-	public:
+ public:
 
-		// required functions by UML
-		Heap();
-		Heap(const Heap<T, m_size>& origHeap);
-		bool Contains(const T& needle) const;	
-		const T* Find(const T& needle) const;
-		T& Remove();	
-		void Insert(T& insertable);		
-		void PercolateUp(int index);
-		void PercolateDown(int index);
+  // required functions by UML
+  Heap();
+  Heap(const Heap<T, m_size> &origHeap);
+  bool Contains(const T &needle) const;
+  const T *Find(const T &needle) const;
+  T &Remove();
+  void Insert(T &insertable);
+  void PercolateUp(int index);
+  void PercolateDown(int index);
 
-		// student-made functions below
+  // student-made functions below
 
-	private:
+ private:
 
-		// UML-required member variables
-		T* m_array;
+  // UML-required member variables
+  T *m_array;
 
-		// student-made member variables
+  // student-made member variables
 
 };
 

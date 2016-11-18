@@ -3,5 +3,5 @@ project(proj4)
 
 set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++11")
 
-set(SOURCE_FILES main.cpp PinHit.cpp PinHit.h Driver.cpp Heap.cpp Heap.h)
-add_executable(proj4 ${SOURCE_FILES})
+set(SOURCE_FILES main.cpp PinHit.cpp PinHit.h Driver.cpp Heap.cpp Heap.h MinHeap.cpp MinHeap.h MaxHeap.cpp MaxHeap.h)
+add_executable(proj4 ${SOURCE_FILES} MinHeap.cpp MinHeap.h MaxHeap.cpp MaxHeap.h)
