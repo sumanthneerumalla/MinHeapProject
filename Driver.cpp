@@ -34,10 +34,6 @@ int main(int argc, char *argv[]) {
   std::vector<PinHit> pinHitVector = ReadPins(&name[0], &myNum);
 
   std::cout << "number of hits is: " << myNum << std::endl;
-
-  for (int i = 0; i <pinHitVector.size() ; ++i) {
-    std::cout<< pinHitVector[i].GetKey() << ": " << pinHitVector[i].GetValue()<< std::endl;
-  }
   return EXIT_SUCCESS;
 }
 

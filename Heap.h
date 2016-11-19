@@ -24,7 +24,8 @@ class Heap {
   T *m_array;
 
   // student-made member variables
-
+  int currentSize;
+  int maxSize;
 };
 
 #include "Heap.cpp"
