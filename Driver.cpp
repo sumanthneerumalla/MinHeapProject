@@ -29,8 +29,12 @@ int main(int argc, char *argv[]) {
 
   printGreeting();
   std::string name = "Input1.txt";
-  int myNum = 8;
-  ReadPins(&name[0],&myNum);
+
+  int myNum = 0;
+
+  ReadPins(&name[0], &myNum);
+//  std::cout<< "number is currently: "<< std::endl;
+  std::cout << "number of hits is: " << myNum << std::endl;
 
   return EXIT_SUCCESS;
 }
@@ -51,13 +55,24 @@ std::vector<PinHit> ReadPins(char *fileName, int *totalHits) {
     exit(1);
   }
 
+  //create a vector of size 10000 PinHits with the range of keys and values set to 0
+  std::vector<PinHit> pinHitVector;
+  for (int i = 0; i < 10000; ++i) {
+    pinHitVector.push_back(PinHit(i, 0));
+  }
+
+  //Use a while loop to iterate through file and update each PinHit value
+  int nextPin;
   int count = 0;
-  while (std::getline(inputFile, line) ) {
-    // process each line
-    std::cout << line<<std::endl;
+  while (std::getline(inputFile, line)) {
+    nextPin = atoi(&line[0]);
+    pinHitVector[nextPin].IncrementHits();
     count++;
   }
 
+  //update the total number of PinHits in this file
+  *totalHits = count;
+  return pinHitVector;
 }
 
 template<class T, int m_size>
