@@ -31,11 +31,13 @@ int main(int argc, char *argv[]) {
   std::string name = "Input1.txt";
 
   int myNum = 0;
+  std::vector<PinHit> pinHitVector = ReadPins(&name[0], &myNum);
 
-  ReadPins(&name[0], &myNum);
-//  std::cout<< "number is currently: "<< std::endl;
   std::cout << "number of hits is: " << myNum << std::endl;
 
+  for (int i = 0; i <pinHitVector.size() ; ++i) {
+    std::cout<< pinHitVector[i].GetKey() << ": " << pinHitVector[i].GetValue()<< std::endl;
+  }
   return EXIT_SUCCESS;
 }
 
