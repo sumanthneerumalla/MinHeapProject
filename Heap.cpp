@@ -3,7 +3,7 @@
 #include "Heap.h"
 #include <stdio.h>
 
-//default contstructor
+//default constructor
 template<class T, int m_size>
 Heap<T, m_size>::Heap() {
   maxSize = m_size;
@@ -15,13 +15,13 @@ Heap<T, m_size>::Heap() {
 //Copy Constructor
 template<class T, int m_size>
 Heap<T, m_size>::Heap(const Heap<T, m_size> &origHeap) {
-  maxSize = m_size;
 
   //copy over other Heaps static data
   currentSize = origHeap.currentSize;
+  maxSize = origHeap.maxSize;
 
-  //create a new array of the same m-size and copy over data
-  m_array = new int[m_size];
+  //create a new array of the same max and copy over data
+  m_array = new int[maxSize];
   for (int i = 0; i < currentSize; i++) {
     m_array[i] = origHeap.m_array[i];
   }
@@ -46,11 +46,10 @@ const T *Heap<T, m_size>::Find(const T &needle) const {
 
   for (int i = 0; i < currentSize; i++) {//size is suppose to be the size of heap
     if (m_array[i] == needle) {
-      return *m_array[i];
+      return &m_array[i];
     }
   }
 }
-/
 
 // /Removes and returns a min/max value T (by reference) from the heap. In the process of removal, the heap is updated to maintain heap order.
 //This function should run in O(log n).
@@ -75,59 +74,61 @@ void Heap<T, m_size>::Insert(T &insertable) {
 
   if (mySize == m_size - 1) {
 //    m_array.resize(m_array.size() * 2);
-  //throw underflow exception here?
+    //throw underflow exception here?
+    std::cout << "Heap has been filled" << std::endl;
   }
   // Percolate up
   int indexLocation = ++mySize;
   for (; indexLocation >= 1 && insertable < m_array[indexLocation / 2]; indexLocation /= 2)
-    m_array[indexLocation] = m_array[indexLocation / 2]; // swap, from child to parent
-  m_array[indexLocation] = insertable;
-  currentSize++;
+  {
+    m_array[indexLocation] = m_array[indexLocation / 2]; }// swap, from child to parent
+    m_array[indexLocation] = insertable;
+    currentSize++;
 
-}
+  }
 
 //This method is used internally on insert. This function should run in O(log n)
-template<class T, int m_size>
-void Heap<T, m_size>::PercolateUp(int index) {
-  int myTemp;
-  T tmp = m_array[index];
+  template<class T, int m_size>
+  void Heap<T, m_size>::PercolateUp(int index) {
+    int myTemp;
+    T tmp = m_array[index];
 
-  for (; index / 2 >= m_size; index = myTemp) {
+    for (; index / 2 >= m_size; index = myTemp) {
 
-    myTemp = index / 2;
-    if (myTemp != m_size && m_array[myTemp + 1] > m_array[myTemp])
-      myTemp++;
+      myTemp = index / 2;
+      if (myTemp != m_size && m_array[myTemp + 1] > m_array[myTemp])
+        myTemp++;
 
-    if (m_array[myTemp] > tmp) {
-      m_array[index] = m_array[myTemp];
+      if (m_array[myTemp] > tmp) {
+        m_array[index] = m_array[myTemp];
+      }
+
+      else {
+        break;
+      }
     }
-
-    else {
-      break;
-    }
+    m_array[index] = tmp;
   }
-  m_array[index] = tmp;
-}
 
 //This method is used internally on insert. This function should run in O(log n)
-template<class T, int m_size>
-void Heap<T, m_size>::PercolateDown(int index) {
-  int myTemp;
-  T tmp = m_array[index];
+  template<class T, int m_size>
+  void Heap<T, m_size>::PercolateDown(int index) {
+    int myTemp;
+    T tmp = m_array[index];
 
-  for (; index * 2 <= m_size; index = myTemp) {
-    myTemp = index * 2;
-    if (myTemp != m_size && m_array[myTemp + 1] < m_array[myTemp])
-      myTemp++;
-    if (m_array[myTemp] < tmp) {
-      m_array[index] = m_array[myTemp];
-    }
+    for (; index * 2 <= m_size; index = myTemp) {
+      myTemp = index * 2;
+      if (myTemp != m_size && m_array[myTemp + 1] < m_array[myTemp])
+        myTemp++;
+      if (m_array[myTemp] < tmp) {
+        m_array[index] = m_array[myTemp];
+      }
 
-    else {
-      break;
+      else {
+        break;
+      }
     }
+    m_array[index] = tmp;
+
   }
-  m_array[index] = tmp;
-
-}
 #endif

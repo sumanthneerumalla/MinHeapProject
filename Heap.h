@@ -1,5 +1,6 @@
 #ifndef HEAP_H_
 #define HEAP_H_
+#include <iostream>
 
 template<class T, int m_size>
 class Heap {
