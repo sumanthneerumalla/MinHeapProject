@@ -77,58 +77,62 @@ void Heap<T, m_size>::Insert(T &insertable) {
     //throw underflow exception here?
     std::cout << "Heap has been filled" << std::endl;
   }
-  // Percolate up
+
+//  for (; indexLocation >= 1 && insertable < m_array[indexLocation / 2]; indexLocation /= 2)
+//  {
+//    m_array[indexLocation] = m_array[indexLocation / 2]; }// swap, from child to parent
+
   int indexLocation = ++mySize;
-  for (; indexLocation >= 1 && insertable < m_array[indexLocation / 2]; indexLocation /= 2)
-  {
-    m_array[indexLocation] = m_array[indexLocation / 2]; }// swap, from child to parent
-    m_array[indexLocation] = insertable;
-    currentSize++;
+  m_array[indexLocation] = insertable;
 
-  }
+  //use the percolate function instead of doing it inside of this function
+  PercolateUp(indexLocation);
+  currentSize++;
 
-//This method is used internally on insert. This function should run in O(log n)
-  template<class T, int m_size>
-  void Heap<T, m_size>::PercolateUp(int index) {
-    int myTemp;
-    T tmp = m_array[index];
-
-    for (; index / 2 >= m_size; index = myTemp) {
-
-      myTemp = index / 2;
-      if (myTemp != m_size && m_array[myTemp + 1] > m_array[myTemp])
-        myTemp++;
-
-      if (m_array[myTemp] > tmp) {
-        m_array[index] = m_array[myTemp];
-      }
-
-      else {
-        break;
-      }
-    }
-    m_array[index] = tmp;
-  }
+}
 
 //This method is used internally on insert. This function should run in O(log n)
-  template<class T, int m_size>
-  void Heap<T, m_size>::PercolateDown(int index) {
-    int myTemp;
-    T tmp = m_array[index];
+template<class T, int m_size>
+void Heap<T, m_size>::PercolateUp(int index) {
+  int myTemp;
+  T tmp = m_array[index];
 
-    for (; index * 2 <= m_size; index = myTemp) {
-      myTemp = index * 2;
-      if (myTemp != m_size && m_array[myTemp + 1] < m_array[myTemp])
-        myTemp++;
-      if (m_array[myTemp] < tmp) {
-        m_array[index] = m_array[myTemp];
-      }
+  for (; index / 2 >= m_size; index = myTemp) {
 
-      else {
-        break;
-      }
+    myTemp = index / 2;
+    if (myTemp != m_size && m_array[myTemp + 1] > m_array[myTemp])
+      myTemp++;
+
+    if (m_array[myTemp] > tmp) {
+      m_array[index] = m_array[myTemp];
     }
-    m_array[index] = tmp;
 
+    else {
+      break;
+    }
   }
+  m_array[index] = tmp;
+}
+
+//This method is used internally on insert. This function should run in O(log n)
+template<class T, int m_size>
+void Heap<T, m_size>::PercolateDown(int index) {
+  int myTemp;
+  T tmp = m_array[index];
+
+  for (; index * 2 <= m_size; index = myTemp) {
+    myTemp = index * 2;
+    if (myTemp != m_size && m_array[myTemp + 1] < m_array[myTemp])
+      myTemp++;
+    if (m_array[myTemp] < tmp) {
+      m_array[index] = m_array[myTemp];
+    }
+
+    else {
+      break;
+    }
+  }
+  m_array[index] = tmp;
+
+}
 #endif

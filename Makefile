@@ -16,7 +16,7 @@ Driver.o: Driver.cpp
 
 .PHONY: run
 run:
-	./driver.out
+	./driver.out $(INPUT) $(FLAG)
 
 .PHONY: clean
 clean:

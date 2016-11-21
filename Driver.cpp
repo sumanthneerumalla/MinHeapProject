@@ -28,12 +28,17 @@ int Hack(Heap<T, m_size> *heap, std::vector<T> PinHits, int totalHits);
 int main(int argc, char *argv[]) {
 
   printGreeting();
-  std::string name = "Input1.txt";
-
+  std::string name = argv[1];
+  heapType = argv[2];
   int myNum = 0;
   std::vector<PinHit> pinHitVector = ReadPins(&name[0], &myNum);
 
   std::cout << "number of hits is: " << myNum << std::endl;
+
+  //use the Build Heap function to build a heap using the vector
+//  Heap<PinHit, pinHitVector.size()> myHeap = BuildHeap(pinHitVector, pinHitVector.size());
+  const int heapSize = pinHitVector.size();
+  BuildHeap<PinHit, 10000>(pinHitVector, heapSize);
   return EXIT_SUCCESS;
 }
 
@@ -75,7 +80,16 @@ std::vector<PinHit> ReadPins(char *fileName, int *totalHits) {
 
 template<class T, int m_size>
 Heap<T, m_size> *BuildHeap(std::vector<T> PinHits, int slots) {
-
+  Heap<T, m_size> *myHeap;
+  for (int i = 0; i < slots; ++i) {
+    int numHits = PinHits[i].GetValue();
+    //insert the PinHit if it
+    if(numHits!=0) {
+      myHeap->Insert(PinHits[i]);
+    }
+//    myHeap->Insert();
+  }
+  return myHeap;
 }
 
 // provided
