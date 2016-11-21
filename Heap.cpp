@@ -1,6 +1,7 @@
 #ifndef HEAP_CPP_
 #define HEAP_CPP_
 #include "Heap.h"
+#include "PinHit.h"
 #include <stdio.h>
 
 //default constructor
@@ -8,7 +9,7 @@ template<class T, int m_size>
 Heap<T, m_size>::Heap() {
   maxSize = m_size;
 
-  m_array = new int[m_size];
+  m_array = new PinHit[m_size + 1];
   currentSize = 0;
 }
 
@@ -22,7 +23,7 @@ Heap<T, m_size>::Heap(const Heap<T, m_size> &origHeap) {
 
   //create a new array of the same max and copy over data
   m_array = new int[maxSize];
-  for (int i = 0; i < currentSize; i++) {
+  for (int i = 1; i < currentSize + 1; i++) {
     m_array[i] = origHeap.m_array[i];
   }
 }
@@ -30,7 +31,7 @@ Heap<T, m_size>::Heap(const Heap<T, m_size> &origHeap) {
 //The contains method returns true if the needle is found in the Heap.
 template<class T, int m_size>
 bool Heap<T, m_size>::Contains(const T &needle) const {
-  for (int i = 0; i < currentSize; i++) {//size is suppose to be the size of heap
+  for (int i = 1; i < currentSize + 1; i++) {//size is suppose to be the size of heap
     if (m_array[i] == needle) {
       return true;
     }
@@ -44,7 +45,7 @@ bool Heap<T, m_size>::Contains(const T &needle) const {
 template<class T, int m_size>
 const T *Heap<T, m_size>::Find(const T &needle) const {
 
-  for (int i = 0; i < currentSize; i++) {//size is suppose to be the size of heap
+  for (int i = 1; i < currentSize +1; i++) {//size is suppose to be the size of heap
     if (m_array[i] == needle) {
       return &m_array[i];
     }
@@ -56,6 +57,8 @@ const T *Heap<T, m_size>::Find(const T &needle) const {
 template<class T, int m_size>
 T &Heap<T, m_size>::Remove() {
 
+  //store the root in the 0 location instead of using a static variable
+  m_array[0] = m_array[1];
   int mySize = m_size;
 
 //	    if( isempty() )
@@ -63,6 +66,7 @@ T &Heap<T, m_size>::Remove() {
 
   m_array[1] = m_array[mySize--];
   PercolateDown(1);
+  return m_array[0];
 
 }
 
@@ -71,17 +75,15 @@ template<class T, int m_size>
 void Heap<T, m_size>::Insert(T &insertable) {
 
   int mySize = currentSize;
+  std::cout << "Size of array is "<< mySize<< std::endl;
 
-  if (mySize == m_size - 1) {
+  if (mySize == m_size ) {
 //    m_array.resize(m_array.size() * 2);
     //throw underflow exception here?
     std::cout << "Heap has been filled" << std::endl;
   }
 
-//  for (; indexLocation >= 1 && insertable < m_array[indexLocation / 2]; indexLocation /= 2)
-//  {
-//    m_array[indexLocation] = m_array[indexLocation / 2]; }// swap, from child to parent
-
+  //increment mySize before inserting so we use the 0 location as a storage location
   int indexLocation = ++mySize;
   m_array[indexLocation] = insertable;
 
@@ -97,10 +99,10 @@ void Heap<T, m_size>::PercolateUp(int index) {
   int myTemp;
   T tmp = m_array[index];
 
-  for (; index / 2 >= m_size; index = myTemp) {
+  for (; index / 2 >= maxSize; index = myTemp) {
 
     myTemp = index / 2;
-    if (myTemp != m_size && m_array[myTemp + 1] > m_array[myTemp])
+    if (myTemp != maxSize && m_array[myTemp + 1] > m_array[myTemp])
       myTemp++;
 
     if (m_array[myTemp] > tmp) {
@@ -120,9 +122,9 @@ void Heap<T, m_size>::PercolateDown(int index) {
   int myTemp;
   T tmp = m_array[index];
 
-  for (; index * 2 <= m_size; index = myTemp) {
+  for (; index * 2 <= maxSize; index = myTemp) {
     myTemp = index * 2;
-    if (myTemp != m_size && m_array[myTemp + 1] < m_array[myTemp])
+    if (myTemp != maxSize && m_array[myTemp + 1] < m_array[myTemp])
       myTemp++;
     if (m_array[myTemp] < tmp) {
       m_array[index] = m_array[myTemp];

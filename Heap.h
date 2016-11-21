@@ -19,7 +19,7 @@ class Heap {
 
   // student-made functions below
 
- private:
+ protected:
 
   // UML-required member variables
   T *m_array;
