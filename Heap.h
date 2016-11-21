@@ -18,6 +18,9 @@ class Heap {
   void PercolateDown(int index);
 
   // student-made functions below
+  ~Heap();
+  bool isEmpty();
+  int getSize();
 
  protected:
 

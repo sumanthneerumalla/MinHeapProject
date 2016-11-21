@@ -61,10 +61,15 @@ T &Heap<T, m_size>::Remove() {
   m_array[0] = m_array[1];
   int mySize = m_size;
 
-//	    if( isempty() )
-//            throw UnderflowException();
+	    if( isEmpty() )
+        {
+          PinHit temp = m_array[0];
+          temp.SetKey(-999);
+          return temp;
+        }
 
   m_array[1] = m_array[mySize--];
+  currentSize--;
   PercolateDown(1);
   return m_array[0];
 
@@ -78,8 +83,6 @@ void Heap<T, m_size>::Insert(T &insertable) {
   std::cout << "Size of array is "<< mySize<< std::endl;
 
   if (mySize == m_size ) {
-//    m_array.resize(m_array.size() * 2);
-    //throw underflow exception here?
     std::cout << "Heap has been filled" << std::endl;
   }
 
@@ -87,8 +90,16 @@ void Heap<T, m_size>::Insert(T &insertable) {
   int indexLocation = ++mySize;
   m_array[indexLocation] = insertable;
 
+  // Percolate up
+  int hole = ++currentSize;
+  for( m_array[ 0 ] = insertable; insertable.CompareTo( m_array[ hole / 2 ] ) < 0; hole /= 2 )
+  { m_array[ hole ] = m_array[ hole / 2 ]; }
+
+  // now put our new value into the right place
+  m_array[ hole ] = insertable;
+
   //use the percolate function instead of doing it inside of this function
-  PercolateUp(indexLocation);
+//  PercolateUp(indexLocation);
   currentSize++;
 
 }
@@ -122,12 +133,12 @@ void Heap<T, m_size>::PercolateDown(int index) {
   int myTemp;
   T tmp = m_array[index];
 
-  for (; index * 2 <= maxSize; index = myTemp) {
+  for (; index * 2 < maxSize; index = myTemp) {
     myTemp = index * 2;
     if (myTemp != maxSize && m_array[myTemp + 1] < m_array[myTemp])
       myTemp++;
     if (m_array[myTemp] < tmp) {
-      m_array[index] = m_array[myTemp];
+      m_array[index] = m_array[myTemp];1;
     }
 
     else {
@@ -137,4 +148,22 @@ void Heap<T, m_size>::PercolateDown(int index) {
   m_array[index] = tmp;
 
 }
+
+template<class T, int m_size>
+Heap<T,m_size>::~Heap(){
+  delete [] m_array;
+};
+
+template<class T, int m_size>
+bool Heap<T, m_size>::isEmpty() {
+  if (currentSize ==0 ){
+    return true;
+  }
+  return false;
+}
+
+template<class T, int m_size>
+int Heap<T, m_size>::getSize() {
+  return currentSize;
+};
 #endif

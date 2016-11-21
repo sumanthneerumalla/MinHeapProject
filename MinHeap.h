@@ -7,7 +7,8 @@
 #include "Heap.h"
 
 template<class T, int m_size> class MinHeap : public Heap<T,m_size> {
-
+  void PercolateUp(int index);
+  void PercolateDown(int index);
 };
 
 #include "MinHeap.cpp"

@@ -38,11 +38,18 @@ int main(int argc, char *argv[]) {
   //use the Build Heap function to build a heap using the vector
   const int heapSize = pinHitVector.size();
   Heap<PinHit, 10000>* myHeap = BuildHeap<PinHit, 10000>(pinHitVector, heapSize);
-
-  for (int i = 0; i <10000 ; ++i) {
-    PinHit nextPin = myHeap->Remove();
-    std::cout<< "Pin id: "<< nextPin.GetKey()<< " with "<< nextPin.GetValue() << " hits"<< std::endl;
+  int temp = myHeap->getSize();
+  for (int i = 0; i <temp ; ++i) {
+    if (!myHeap->isEmpty()) {
+      PinHit nextPin = myHeap->Remove();
+      std::cout<< "Pin id: "<< nextPin.GetKey()<< " with "<< nextPin.GetValue() << " hits"<< std::endl;
+    }
+    else{
+      std::cout<< "stack is empty"<<std::endl;
+    }
   }
+
+  delete myHeap;
   return EXIT_SUCCESS;
 }
 
@@ -84,7 +91,18 @@ std::vector<PinHit> ReadPins(char *fileName, int *totalHits) {
 
 template<class T, int m_size>
 Heap<T, m_size> *BuildHeap(std::vector<T> PinHits, int slots) {
-  Heap<T, m_size> *myHeap = new Heap<PinHit,10000>;
+  Heap<T, m_size> *myHeap ;
+
+  if (heapType == "--min") {
+    myHeap = new MinHeap<T, m_size>();
+  }
+  else if (heapType == "--max") {
+    myHeap = new MaxHeap<T, m_size>();
+  }
+  else {
+    myHeap = new Heap<T, m_size>();
+  }
+
   for (int i = 0; i < slots; ++i) {
     int numHits = PinHits[i].GetValue();
     //insert the PinHit object only if it has hits
