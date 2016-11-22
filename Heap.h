@@ -22,11 +22,9 @@ class Heap {
   bool isEmpty();
   int getSize();
 
- protected:
-
   // UML-required member variables
   T *m_array;
-
+ protected:
   // student-made member variables
   int currentSize;
   int maxSize;

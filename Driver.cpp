@@ -33,7 +33,7 @@ int main(int argc, char *argv[]) {
   int myNum = 0;
   std::vector<PinHit> pinHitVector = ReadPins(&name[0], &myNum);
 
-  std::cout << "number of hits is: " << myNum << std::endl;
+//  std::cout << "number of hits is: " << myNum << std::endl;
 
   //use the Build Heap function to build a heap using the vector
   const int heapSize = pinHitVector.size();
@@ -41,7 +41,7 @@ int main(int argc, char *argv[]) {
   int temp = myHeap->getSize();
   for (int i = 0; i <temp ; ++i) {
     if (!myHeap->isEmpty()) {
-      PinHit nextPin = myHeap->Remove();
+      PinHit nextPin = myHeap->m_array[i];
       std::cout<< "Pin id: "<< nextPin.GetKey()<< " with "<< nextPin.GetValue() << " hits"<< std::endl;
     }
     else{

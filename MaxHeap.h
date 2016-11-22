@@ -8,8 +8,10 @@
 
 template<class T, int m_size>
 class MaxHeap : public Heap<T,m_size>{
-//  void PercolateUp(int index);
+ public:
+  void PercolateUp(int index);
   void PercolateDown(int index);
+  MaxHeap();
 };
 
 #include "MaxHeap.cpp"

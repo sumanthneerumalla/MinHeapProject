@@ -63,9 +63,9 @@ T &Heap<T, m_size>::Remove() {
 
 	    if( isEmpty() )
         {
-          PinHit temp = m_array[0];
-          temp.SetKey(-999);
-          return temp;
+          PinHit *temp =&m_array[0];
+          temp->SetKey(-999);
+          return *temp;
         }
 
   m_array[1] = m_array[mySize--];
@@ -78,74 +78,55 @@ T &Heap<T, m_size>::Remove() {
 //Given a T, insert will insert the new object into the heap. If needed, the object will percolate up. This function should run in O(n).
 template<class T, int m_size>
 void Heap<T, m_size>::Insert(T &insertable) {
-
   int mySize = currentSize;
-  std::cout << "Size of array is "<< mySize<< std::endl;
+  std::cout<< mySize<< std::endl;
 
   if (mySize == m_size ) {
     std::cout << "Heap has been filled" << std::endl;
   }
+  int hole = currentSize++;
+  m_array[0] = insertable;
+  PercolateUp(mySize);
 
-  //increment mySize before inserting so we use the 0 location as a storage location
-  int indexLocation = ++mySize;
-  m_array[indexLocation] = insertable;
-
-  // Percolate up
-  int hole = ++currentSize;
-  for( m_array[ 0 ] = insertable; insertable.CompareTo( m_array[ hole / 2 ] ) < 0; hole /= 2 )
-  { m_array[ hole ] = m_array[ hole / 2 ]; }
+//
+//  //increment mySize before inserting so we use the 0 location as a storage location
+//  int indexLocation = ++mySize;
+//  m_array[indexLocation] = insertable;
+//
+//  // Percolate up
+//  int hole = ++currentSize;
+//  for( m_array[ 0 ] = insertable; insertable.CompareTo( m_array[ hole / 2 ] ) < 0; hole /= 2 )
+//  { m_array[ hole ] = m_array[ hole / 2 ]; }
 
   // now put our new value into the right place
   m_array[ hole ] = insertable;
 
   //use the percolate function instead of doing it inside of this function
 //  PercolateUp(indexLocation);
-  currentSize++;
 
 }
 
 //This method is used internally on insert. This function should run in O(log n)
+//The heap version of this is virtual so it is empty
 template<class T, int m_size>
 void Heap<T, m_size>::PercolateUp(int index) {
-  int myTemp;
-  T tmp = m_array[index];
-
-  for (; index / 2 >= maxSize; index = myTemp) {
-
-    myTemp = index / 2;
-    if (myTemp != maxSize && m_array[myTemp + 1] > m_array[myTemp])
-      myTemp++;
-
-    if (m_array[myTemp] > tmp) {
-      m_array[index] = m_array[myTemp];
-    }
-
-    else {
-      break;
-    }
-  }
-  m_array[index] = tmp;
-}
+  for( this->m_array[ 0 ] = this->m_array[0]; this->m_array[0].CompareTo( this->m_array[ index / 2 ] ) > 0; index /= 2 )
+  { this->m_array[ index ] = this->m_array[0]; }}
 
 //This method is used internally on insert. This function should run in O(log n)
 template<class T, int m_size>
 void Heap<T, m_size>::PercolateDown(int index) {
-  int myTemp;
-  T tmp = m_array[index];
+  int child;
+  T tmp = this->m_array[index];
 
-  for (; index * 2 < maxSize; index = myTemp) {
-    myTemp = index * 2;
-    if (myTemp != maxSize && m_array[myTemp + 1] < m_array[myTemp])
-      myTemp++;
-    if (m_array[myTemp] < tmp) {
-      m_array[index] = m_array[myTemp];1;
-    }
-
-    else {
-      break;
-    }
+  for (; index * 2 <= this->currentSize; index = child) {
+    child = index * 2;
+    if (child != this->currentSize && this->m_array[child + 1].CompareTo( this->m_array[child]) >0){
+      child++;}
+    if (this->m_array[child].CompareTo(tmp) >0) { this->m_array[index] = this->m_array[child]; }
+    else { break; }
   }
-  m_array[index] = tmp;
+  this->m_array[index] = tmp;
 
 }
 
