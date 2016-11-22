@@ -59,7 +59,6 @@ T &Heap<T, m_size>::Remove() {
 
   //store the root in the 0 location instead of using a static variable
   m_array[0] = m_array[1];
-  int mySize = m_size;
 
 	    if( isEmpty() )
         {
