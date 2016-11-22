@@ -36,18 +36,20 @@ int main(int argc, char *argv[]) {
 //  std::cout << "number of hits is: " << myNum << std::endl;
 
   //use the Build Heap function to build a heap using the vector
-  const int heapSize = pinHitVector.size();
+  const int heapSize = pinHitVector.size() ;
   Heap<PinHit, 10000>* myHeap = BuildHeap<PinHit, 10000>(pinHitVector, heapSize);
   int temp = myHeap->getSize();
-  for (int i = 0; i <temp ; ++i) {
-    if (!myHeap->isEmpty()) {
-      PinHit nextPin = myHeap->Remove();
-      std::cout<< "Pin id: "<< nextPin.GetKey()<< " with "<< nextPin.GetValue() << " hits"<< std::endl;
-    }
-    else{
-      std::cout<< "stack is empty"<<std::endl;
-    }
-  }
+//  for (int i = 0; i <temp ; ++i) {
+//    if (!myHeap->isEmpty()) {
+//      PinHit nextPin = myHeap->Remove();
+//      std::cout<< "Pin id: "<< nextPin.GetKey()<< " with "<< nextPin.GetValue() << " hits"<< std::endl;
+//    }
+//    else{
+//      std::cout<< "stack is empty"<<std::endl;
+//    }
+//  }
+
+  int numHacks = Hack<PinHit,10000>(myHeap,pinHitVector,myNum);
 
   delete myHeap;
   return EXIT_SUCCESS;

@@ -11,7 +11,7 @@ template<class T, int m_size>
 MinHeap<T, m_size>::MinHeap() {
   this->maxSize = m_size;
 
-  this->m_array = new PinHit[m_size + 1];
+  this->m_array = new T[m_size + 1];
   this->currentSize = 0;
 }
 
@@ -20,11 +20,11 @@ template<class T, int m_size>
 MinHeap<T, m_size>::MinHeap(const Heap<T, m_size> &origHeap) {
 
   //copy over other Heaps static data
-  this->currentSize = origHeap.currentSize;
-  this->maxSize = origHeap.maxSize;
+  this->currentSize = origHeap.getSize();
+  this->maxSize = origHeap.getMaxSize();
 
   //create a new array of the same max and copy over data
-  this->m_array = new int[this->maxSize];
+  this->m_array = new T[this->maxSize];
   for (int i = 1; i < this->currentSize + 1; i++) {
     this->m_array[i] = origHeap.m_array[i];
   }
@@ -52,5 +52,10 @@ void MinHeap<T, m_size>::PercolateDown(int index) {
   }
   this->m_array[index] = tmp;
 }
+
+template<class T, int m_size>
+MinHeap<T,m_size>::~MinHeap(){
+  delete [] this->m_array;
+};
 
 #endif

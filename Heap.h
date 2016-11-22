@@ -20,7 +20,8 @@ class Heap {
   // student-made functions below
   ~Heap();
   bool isEmpty();
-  int getSize();
+  int getSize() const;
+  int getMaxSize() const;
 
   // UML-required member variables
   T *m_array;

@@ -10,7 +10,7 @@ template<class T, int m_size>
 MaxHeap<T, m_size>::MaxHeap() {
   this->maxSize = m_size;
 
-  this->m_array = new PinHit[m_size + 1];
+  this->m_array = new T[m_size + 1];
   this->currentSize = 0;
 }
 
@@ -19,11 +19,11 @@ template<class T, int m_size>
 MaxHeap<T, m_size>::MaxHeap(const Heap<T, m_size> &origHeap) {
 
   //copy over other Heaps static data
-  this->currentSize = origHeap.currentSize;
-  this->maxSize = origHeap.maxSize;
+  this->currentSize = origHeap.getSize();
+  this->maxSize = origHeap.getMaxSize();
 
   //create a new array of the same max and copy over data
-  this->m_array = new int[this->maxSize];
+  this->m_array = new T[this->maxSize];
   for (int i = 1; i < this->currentSize + 1; i++) {
     this->m_array[i] = origHeap.m_array[i];
   }
@@ -49,4 +49,9 @@ void MaxHeap<T, m_size>::PercolateDown(int index) {
   }
   this->m_array[index] = tmp;
 }
+
+template<class T, int m_size>
+MaxHeap<T,m_size>::~MaxHeap(){
+  delete [] this->m_array;
+};
 #endif

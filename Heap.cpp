@@ -9,7 +9,7 @@ template<class T, int m_size>
 Heap<T, m_size>::Heap() {
   maxSize = m_size;
 
-  m_array = new PinHit[m_size + 1];
+  m_array = new T[m_size + 1];
   currentSize = 0;
 }
 
@@ -22,7 +22,7 @@ Heap<T, m_size>::Heap(const Heap<T, m_size> &origHeap) {
   maxSize = origHeap.maxSize;
 
   //create a new array of the same max and copy over data
-  m_array = new int[maxSize];
+  m_array = new T[maxSize];
   for (int i = 1; i < currentSize + 1; i++) {
     m_array[i] = origHeap.m_array[i];
   }
@@ -63,13 +63,13 @@ T &Heap<T, m_size>::Remove() {
 
 	    if( isEmpty() )
         {
-          PinHit *temp =&m_array[0];
+          T *temp =&m_array[0];
           temp->SetKey(-999);
           return *temp;
         }
 
   m_array[1] = m_array[currentSize-1];
-  m_array[currentSize-1] = PinHit(m_array[currentSize-1].GetValue(), 0);
+//  m_array[currentSize-1] = T(m_array[currentSize-1].GetValue(), 0);
   currentSize--;
   PercolateDown(1);
   return m_array[0];
@@ -144,7 +144,12 @@ bool Heap<T, m_size>::isEmpty() {
 }
 
 template<class T, int m_size>
-int Heap<T, m_size>::getSize() {
+int Heap<T, m_size>::getSize() const {
+  return currentSize;
+};
+
+template<class T, int m_size>
+int Heap<T, m_size>::getMaxSize() const {
   return currentSize;
 };
 #endif
