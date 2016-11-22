@@ -45,7 +45,7 @@ bool Heap<T, m_size>::Contains(const T &needle) const {
 template<class T, int m_size>
 const T *Heap<T, m_size>::Find(const T &needle) const {
 
-  for (int i = 1; i < currentSize +1; i++) {//size is suppose to be the size of heap
+  for (int i = 1; i < currentSize + 1; i++) {//size is suppose to be the size of heap
     if (m_array[i] == needle) {
       return &m_array[i];
     }
@@ -58,20 +58,26 @@ template<class T, int m_size>
 T &Heap<T, m_size>::Remove() {
 
   //store the root in the 0 location instead of using a static variable
-  m_array[0] = m_array[1];
-  int mySize = m_size;
 
-	    if( isEmpty() )
-        {
-          T *temp =&m_array[0];
-          temp->SetKey(-999);
-          return *temp;
-        }
+  T temp = m_array[1];
+  //m_array[0] = m_array[1];
 
-  m_array[1] = m_array[currentSize-1];
+  if (isEmpty()) {
+    T *temp = &m_array[0];
+    temp->SetKey(-9999);
+    std::cout<< "---------------------------------------------------------" << std::endl;
+
+    return *temp;
+
+  }
+
+  m_array[1] = m_array[currentSize - 1];
 //  m_array[currentSize-1] = T(m_array[currentSize-1].GetValue(), 0);
   currentSize--;
   PercolateDown(1);
+
+  std::cout<< "just removed: "<< m_array[0].GetValue() << std::endl;
+  m_array[0] = temp;
   return m_array[0];
 
 }
@@ -81,12 +87,12 @@ template<class T, int m_size>
 void Heap<T, m_size>::Insert(T &insertable) {
   int mySize = currentSize;
 
-  if (mySize == m_size ) {
+  if (mySize == m_size) {
     std::cout << "Heap has been filled" << std::endl;
   }
   int hole = currentSize++;
-  m_array[0] = insertable;
-  PercolateUp(mySize);
+  m_array[hole] = insertable;
+  PercolateUp(hole);
 
 //
 //  //increment mySize before inserting so we use the 0 location as a storage location
@@ -99,7 +105,7 @@ void Heap<T, m_size>::Insert(T &insertable) {
 //  { m_array[ hole ] = m_array[ hole / 2 ]; }
 
   // now put our new value into the right place
-  m_array[ hole ] = insertable;
+  //m_array[hole] = m_array[0];
 
   //use the percolate function instead of doing it inside of this function
 //  PercolateUp(indexLocation);
@@ -110,8 +116,10 @@ void Heap<T, m_size>::Insert(T &insertable) {
 //The heap version of this is virtual so it is empty
 template<class T, int m_size>
 void Heap<T, m_size>::PercolateUp(int index) {
-  for( this->m_array[ 0 ] = this->m_array[0]; this->m_array[0].CompareTo( this->m_array[ index / 2 ] ) > 0; index /= 2 )
-  { this->m_array[ index ] = this->m_array[0]; }}
+  for (this->m_array[0] = this->m_array[0]; this->m_array[0].CompareTo(this->m_array[index / 2]) > 0; index /= 2) {
+    this->m_array[index] = this->m_array[0];
+  }
+}
 
 //This method is used internally on insert. This function should run in O(log n)
 template<class T, int m_size>
@@ -121,9 +129,10 @@ void Heap<T, m_size>::PercolateDown(int index) {
 
   for (; index * 2 <= this->currentSize; index = child) {
     child = index * 2;
-    if (child != this->currentSize && this->m_array[child + 1].CompareTo( this->m_array[child]) >0){
-      child++;}
-    if (this->m_array[child].CompareTo(tmp) >0) { this->m_array[index] = this->m_array[child]; }
+    if (child != this->currentSize && this->m_array[child + 1].CompareTo(this->m_array[child]) > 0) {
+      child++;
+    }
+    if (this->m_array[child].CompareTo(tmp) > 0) { this->m_array[index] = this->m_array[child]; }
     else { break; }
   }
   this->m_array[index] = tmp;
@@ -131,13 +140,13 @@ void Heap<T, m_size>::PercolateDown(int index) {
 }
 
 template<class T, int m_size>
-Heap<T,m_size>::~Heap(){
-  delete [] m_array;
+Heap<T, m_size>::~Heap() {
+  delete[] m_array;
 };
 
 template<class T, int m_size>
 bool Heap<T, m_size>::isEmpty() {
-  if (currentSize ==0 ){
+  if (currentSize == 0) {
     return true;
   }
   return false;
