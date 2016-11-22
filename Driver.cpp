@@ -50,6 +50,7 @@ int main(int argc, char *argv[]) {
 //  }
 
   int numHacks = Hack<PinHit,10000>(myHeap,pinHitVector,myNum);
+  std::cout<< "Total Pins Cracked: "<< numHacks<< std::endl;
 
   delete myHeap;
   return EXIT_SUCCESS;
@@ -190,10 +191,10 @@ int Hack(Heap<T, m_size> *heap, std::vector<T> PinHits, int totalHits) {
     if (topOfHeap == defaultPin)
       break;
 
-    std::cout << topOfHeap.GetKey() << ", " << topOfHeap.GetValue() << " our last attempt" << std::endl;
+//    std::cout << topOfHeap.GetKey() << ", " << topOfHeap.GetValue() << " our last attempt" << std::endl;
 
     if (hackAttemptsLeft == 1)
-      std::cout << topOfHeap.GetKey() << ", " << topOfHeap.GetValue() << " our last attempt" << std::endl;
+//      std::cout << topOfHeap.GetKey() << ", " << topOfHeap.GetValue() << " our last attempt" << std::endl;
 
     hackAttemptsLeft--;
 

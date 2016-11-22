@@ -50,6 +50,9 @@ const T *Heap<T, m_size>::Find(const T &needle) const {
       return &m_array[i];
     }
   }
+
+  //return the buffer location just in case
+  return &m_array[0];
 }
 
 // /Removes and returns a min/max value T (by reference) from the heap. In the process of removal, the heap is updated to maintain heap order.
@@ -137,7 +140,7 @@ Heap<T,m_size>::~Heap(){
 
 template<class T, int m_size>
 bool Heap<T, m_size>::isEmpty() {
-  if (currentSize ==0 ){
+  if (currentSize <=0 ){
     return true;
   }
   return false;
