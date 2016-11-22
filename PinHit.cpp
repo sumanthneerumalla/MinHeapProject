@@ -77,27 +77,3 @@ bool PinHit::operator==(const PinHit &other) {
     return false;
   }
 }
-
-//overloaded comparison operator
-//Pre: Takes in the address of the other PinHit class
-//Post: returns true or false based on the m_pin values
-bool PinHit::operator>(const PinHit &other) {
-  if (m_hits > other.m_hits) {
-    return true;
-  }
-  else {
-    return false;
-  }
-}
-
-//overloaded comparison operator
-//Pre: Takes in the address of the other PinHit class
-//Post: returns true or false based on the m_pin values
-bool PinHit::operator<(const PinHit &other) {
-  if (m_hits < other.m_hits) {
-    return true;
-  }
-  else {
-    return false;
-  }
-}

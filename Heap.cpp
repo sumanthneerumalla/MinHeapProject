@@ -68,7 +68,8 @@ T &Heap<T, m_size>::Remove() {
           return *temp;
         }
 
-  m_array[1] = m_array[mySize--];
+  m_array[1] = m_array[currentSize-1];
+  m_array[currentSize-1] = PinHit(m_array[currentSize-1].GetValue(), 0);
   currentSize--;
   PercolateDown(1);
   return m_array[0];
@@ -79,7 +80,6 @@ T &Heap<T, m_size>::Remove() {
 template<class T, int m_size>
 void Heap<T, m_size>::Insert(T &insertable) {
   int mySize = currentSize;
-  std::cout<< mySize<< std::endl;
 
   if (mySize == m_size ) {
     std::cout << "Heap has been filled" << std::endl;

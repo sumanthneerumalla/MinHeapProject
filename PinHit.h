@@ -20,8 +20,7 @@ class PinHit {
   void IncrementHits();
   int CompareTo(const PinHit &other) const;
   bool operator==(const PinHit &other);
-  bool operator>(const PinHit &other);
-  bool operator<(const PinHit &other);
+
 
  private:
 

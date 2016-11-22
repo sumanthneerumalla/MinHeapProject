@@ -14,8 +14,8 @@ class Heap {
   const T *Find(const T &needle) const;
   T &Remove();
   void Insert(T &insertable);
-  void PercolateUp(int index);
-  void PercolateDown(int index);
+  virtual void PercolateUp(int index);
+  virtual void PercolateDown(int index);
 
   // student-made functions below
   ~Heap();

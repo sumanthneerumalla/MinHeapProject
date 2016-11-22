@@ -14,6 +14,21 @@ MaxHeap<T, m_size>::MaxHeap() {
   this->currentSize = 0;
 }
 
+//Copy Constructor
+template<class T, int m_size>
+MaxHeap<T, m_size>::MaxHeap(const Heap<T, m_size> &origHeap) {
+
+  //copy over other Heaps static data
+  this->currentSize = origHeap.currentSize;
+  this->maxSize = origHeap.maxSize;
+
+  //create a new array of the same max and copy over data
+  this->m_array = new int[this->maxSize];
+  for (int i = 1; i < this->currentSize + 1; i++) {
+    this->m_array[i] = origHeap.m_array[i];
+  }
+}
+
 template<class T, int m_size>
 void MaxHeap<T, m_size>::PercolateUp(int index) {
   for( this->m_array[ 0 ] = this->m_array[0]; this->m_array[0].CompareTo( this->m_array[ index / 2 ] ) > 0; index /= 2 )

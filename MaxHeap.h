@@ -9,6 +9,7 @@
 template<class T, int m_size>
 class MaxHeap : public Heap<T,m_size>{
  public:
+  MaxHeap(const Heap<T, m_size> &origHeap);
   void PercolateUp(int index);
   void PercolateDown(int index);
   MaxHeap();

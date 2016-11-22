@@ -41,7 +41,7 @@ int main(int argc, char *argv[]) {
   int temp = myHeap->getSize();
   for (int i = 0; i <temp ; ++i) {
     if (!myHeap->isEmpty()) {
-      PinHit nextPin = myHeap->m_array[i];
+      PinHit nextPin = myHeap->Remove();
       std::cout<< "Pin id: "<< nextPin.GetKey()<< " with "<< nextPin.GetValue() << " hits"<< std::endl;
     }
     else{

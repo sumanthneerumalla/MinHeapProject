@@ -8,6 +8,7 @@
 
 template<class T, int m_size> class MinHeap : public Heap<T,m_size> {
  public:
+  MinHeap(const Heap<T, m_size> &origHeap);
   void PercolateUp(int index);
   void PercolateDown(int index);
   MinHeap();
