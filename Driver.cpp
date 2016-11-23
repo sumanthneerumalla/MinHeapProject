@@ -44,21 +44,12 @@ int main(int argc, char *argv[]) {
 //  std::cout << "number of hits is: " << myNum << std::endl;
 
   //use the Build Heap function to build a heap using the vector
-  const int heapSize = pinHitVector.size() ;
-  Heap<PinHit, 10000>* myHeap = BuildHeap<PinHit, 10000>(pinHitVector, heapSize);
-  int temp = myHeap->getSize();
-//  for (int i = 0; i <temp ; ++i) {
-//    if (!myHeap->isEmpty()) {
-//      PinHit nextPin = myHeap->Remove();
-//      std::cout<< "Pin id: "<< nextPin.GetKey()<< " with "<< nextPin.GetValue() << " hits"<< std::endl;
-//    }
-//    else{
-//      std::cout<< "stack is empty"<<std::endl;
-//    }
-//  }
+  const int heapSize = pinHitVector.size();
+  Heap<PinHit, 10000> *myHeap = BuildHeap<PinHit, 10000>(pinHitVector, heapSize);
 
-  int numHacks = Hack<PinHit,10000>(myHeap,pinHitVector,myNum);
-  std::cout<< "Total Cracked: "<< numHacks<< std::endl;
+  //Pass in the newly built heap into the Hack function in order to "hack" pins and print out the result
+  int numHacks = Hack<PinHit, 10000>(myHeap, pinHitVector, myNum);
+  std::cout << "Total Cracked: " << numHacks << std::endl;
 
   delete myHeap;
   return EXIT_SUCCESS;
@@ -102,8 +93,9 @@ std::vector<PinHit> ReadPins(char *fileName, int *totalHits) {
 
 template<class T, int m_size>
 Heap<T, m_size> *BuildHeap(std::vector<T> PinHits, int slots) {
-  Heap<T, m_size> *myHeap ;
+  Heap<T, m_size> *myHeap;
 
+  //assign the parent class pointer to the right type of heap, based on the flag given
   if (heapType == "--min") {
     myHeap = new MinHeap<T, m_size>();
   }
@@ -114,10 +106,11 @@ Heap<T, m_size> *BuildHeap(std::vector<T> PinHits, int slots) {
     myHeap = new Heap<T, m_size>();
   }
 
+  //iterate through the provided vector and insert pins, but only if they have a valid number of hits
   for (int i = 0; i < slots; ++i) {
     int numHits = PinHits[i].GetValue();
     //insert the PinHit object only if it has hits
-    if(numHits!=0) {
+    if (numHits != 0) {
       myHeap->Insert(PinHits[i]);
     }
   }
@@ -200,10 +193,9 @@ int Hack(Heap<T, m_size> *heap, std::vector<T> PinHits, int totalHits) {
     if (topOfHeap == defaultPin)
       break;
 
-    std::cout << topOfHeap.GetKey() << ", " << topOfHeap.GetValue() << " our last attempt" << std::endl;
+//    std::cout << topOfHeap.GetKey() << ", " << topOfHeap.GetValue() << " our last attempt" << std::endl;
 
-
-    if (hackAttemptsLeft == 1){
+    if (hackAttemptsLeft == 1) {
 //      std::cout << topOfHeap.GetKey() << ", " << topOfHeap.GetValue() << " our last attempt" << std::endl;
     }
 
