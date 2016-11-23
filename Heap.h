@@ -1,3 +1,11 @@
+//File:    Heap.h
+// Project: CMSC 202 Project 4, Fall 2016
+// Author:  Sumanth Neerumalla
+// Date:    11/20/16
+// Section: 05
+// E-mail:  sz60171@umbc.edu
+//Description: This file has the declaration of the parent Heap class
+
 #ifndef HEAP_H_
 #define HEAP_H_
 #include <iostream>

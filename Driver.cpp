@@ -1,3 +1,11 @@
+//File:    Driver.cpp
+// Project: CMSC 202 Project 4, Fall 2016
+// Author:  Sumanth Neerumalla
+// Date:    11/20/16
+// Section: 05
+// E-mail:  sz60171@umbc.edu
+//Description: This is the driver used for this project
+
 #include <cstdlib>
 #include <iostream>
 #include <fstream>
@@ -161,6 +169,7 @@ int Hack(Heap<T, m_size> *heap, std::vector<T> PinHits, int totalHits) {
     curPinHit = PinHits[randomIndex];
     newHits = curPinHit.GetValue(); // make sure it's actually in our heap
     std::cout << "Random Pin: [" << curPinHit.GetKey() << ", " << curPinHit.GetValue() << "] found!" << std::endl;
+    successfulHacks++;
     failSafe++;
   }
 
@@ -191,7 +200,7 @@ int Hack(Heap<T, m_size> *heap, std::vector<T> PinHits, int totalHits) {
     if (topOfHeap == defaultPin)
       break;
 
-//    std::cout << topOfHeap.GetKey() << ", " << topOfHeap.GetValue() << " our last attempt" << std::endl;
+    std::cout << topOfHeap.GetKey() << ", " << topOfHeap.GetValue() << " our last attempt" << std::endl;
 
 
     if (hackAttemptsLeft == 1){

@@ -1,11 +1,19 @@
+//File:    MaxHeap.cpp
+// Project: CMSC 202 Project 4, Fall 2016
+// Author:  Sumanth Neerumalla
+// Date:    11/20/16
+// Section: 05
+// E-mail:  sz60171@umbc.edu
+//Description: This file has the implementation of the MaxHeap class
+
 #ifndef PROJ4_MAXHEAP_CPP
 #define PROJ4_MAXHEAP_CPP
-//
-// Created by Admin on 11/18/2016.
-//
 
 #include "MaxHeap.h"
 
+//default constructor
+//Pre:None
+//Post:Pointer to this object, since its a constructor
 template<class T, int m_size>
 MaxHeap<T, m_size>::MaxHeap() {
   this->maxSize = m_size;
@@ -15,6 +23,8 @@ MaxHeap<T, m_size>::MaxHeap() {
 }
 
 //Copy Constructor
+//Pre: Takes in the heap to be copied
+//Post:Pointer to this object, since its a constructor
 template<class T, int m_size>
 MaxHeap<T, m_size>::MaxHeap(const Heap<T, m_size> &origHeap) {
 
@@ -29,12 +39,18 @@ MaxHeap<T, m_size>::MaxHeap(const Heap<T, m_size> &origHeap) {
   }
 }
 
+//PercolateUp: Used to percolate a specific location up the array
+//Pre:Takes in an int of the index to start percolation at
+//Post:None
 template<class T, int m_size>
 void MaxHeap<T, m_size>::PercolateUp(int index) {
   for( this->m_array[ 0 ] = this->m_array[0]; this->m_array[0].CompareTo( this->m_array[ index / 2 ] ) > 0; index /= 2 )
   { this->m_array[ index ] = this->m_array[0]; }
 }
 
+//PercolateDown: Used to percolate a specific location up the array
+//Pre:Takes in an int of the index to start percolation at
+//Post:None
 template<class T, int m_size>
 void MaxHeap<T, m_size>::PercolateDown(int index) {
   int child;
@@ -50,6 +66,9 @@ void MaxHeap<T, m_size>::PercolateDown(int index) {
   this->m_array[index] = tmp;
 }
 
+//Destructor
+//Pre:None
+//Post:Deletes the dynamically allocated memory
 template<class T, int m_size>
 MaxHeap<T,m_size>::~MaxHeap(){
   delete [] this->m_array;
