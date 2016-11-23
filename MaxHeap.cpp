@@ -16,10 +16,7 @@
 //Post:Pointer to this object, since its a constructor
 template<class T, int m_size>
 MaxHeap<T, m_size>::MaxHeap() {
-  this->maxSize = m_size;
-
-  this->m_array = new T[m_size + 1];
-  this->currentSize = 0;
+  //do nothing since it already calls the parent constructor
 }
 
 //Copy Constructor
